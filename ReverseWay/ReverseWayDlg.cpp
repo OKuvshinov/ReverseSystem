@@ -181,6 +181,6 @@ void CReverseWayDlg::add_equal()
 	CString s;
 
 	SysOfEqui *sistema;
-	sistema = new SysOfEqui[_ttoi(AmountOfEquals.GetWindowTextW(s))];
+	//sistema = new SysOfEqui[_ttoi(AmountOfEquals.GetWindowTextW(s))];
 	// TODO: добавьте свой код обработчика уведомлений
 }
