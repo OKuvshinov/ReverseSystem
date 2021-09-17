@@ -37,4 +37,6 @@ public:
 	afx_msg void start_input_equals();
 	CEdit CertainEqual;
 	afx_msg void add_equal();
+	afx_msg void make_step();
+	CEdit TestResult;
 };

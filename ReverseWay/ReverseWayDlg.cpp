@@ -63,6 +63,7 @@ void CReverseWayDlg::DoDataExchange(CDataExchange* pDX)
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_EDIT1, AmountOfEquals);
 	DDX_Control(pDX, IDC_EDIT2, CertainEqual);
+	DDX_Control(pDX, IDC_EDIT3, TestResult);
 }
 
 BEGIN_MESSAGE_MAP(CReverseWayDlg, CDialogEx)
@@ -71,6 +72,7 @@ BEGIN_MESSAGE_MAP(CReverseWayDlg, CDialogEx)
 	ON_WM_QUERYDRAGICON()
 	ON_BN_CLICKED(IDC_BUTTON1, &CReverseWayDlg::start_input_equals)
 	ON_BN_CLICKED(IDC_BUTTON2, &CReverseWayDlg::add_equal)
+	ON_BN_CLICKED(IDC_BUTTON3, &CReverseWayDlg::make_step)
 END_MESSAGE_MAP()
 
 
@@ -151,14 +153,6 @@ void CReverseWayDlg::OnPaint()
 	{
 		CDialogEx::OnPaint();
 	}
-
-	//Выбор количества уравнений управляемой системы
-	for (int i = 1; i <= 4; i++)
-	{
-		
-	}
-	//AmountOfEqui.AddString(_T("1"));
-	//AmountOfEqui.SetDlgItemInt(0, 1, 1);
 }
 
 // Система вызывает эту функцию для получения отображения курсора при перемещении
@@ -169,18 +163,46 @@ HCURSOR CReverseWayDlg::OnQueryDragIcon()
 }
 
 
+SysOfEqui Equals;
+
 void CReverseWayDlg::start_input_equals()
 {
-	CertainEqual.EnableWindow(1);
+	CString AOE;
+	AmountOfEquals.GetWindowTextW(AOE);
+	if (_ttoi(AOE) > 0)
+	{
+		Equals.set_AOE(AOE);
+		CertainEqual.EnableWindow(1);
+	}
+	else
+	{
+		AfxMessageBox(_T("Ошибка ввода!"), MB_ICONERROR);
+	}
 	// TODO: добавьте свой код обработчика уведомлений
 }
 
 
 void CReverseWayDlg::add_equal()
 {
-	CString s;
+	CString InputEqual;
+	CertainEqual.GetWindowTextW(InputEqual);
+	int a = _ttoi(CString(InputEqual[InputEqual.GetLength() - 1]));
+	if (_ttoi(CString(InputEqual[InputEqual.GetLength() - 1])) == 0 && InputEqual[InputEqual.GetLength() - 1] != '0')
+	{
+		AfxMessageBox(_T("Ошибка ввода!"), MB_ICONERROR);
+	}
+	else
+	{
+		Equals.add_equal(InputEqual);
+	}
+	// TODO: добавьте свой код обработчика уведомлений
+}
 
-	SysOfEqui *sistema;
-	//sistema = new SysOfEqui[_ttoi(AmountOfEquals.GetWindowTextW(s))];
+
+void CReverseWayDlg::make_step()
+{
+	CString answer;
+	answer.Format(_T("%.2f"), Equals.parse_from_str());
+	TestResult.SetWindowTextW(answer);
 	// TODO: добавьте свой код обработчика уведомлений
 }
